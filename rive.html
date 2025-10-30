@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rive Project</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #8b1919 0%, #140b1c 100%);
+        /* background-image: url('9290536.jpg'); */
+        /* background-image: url('magicpattern-grid-pattern-1761767704860.png'); */
+        /* background-size: cover;
+        background-position: center; */
+      }
+      canvas {
+        border-radius: 8px;
+      }
+    </style>
+</head>
+<body>
+    <canvas id="testimonialCanvas" width="1200" height="600"></canvas>
+
+<script src="https://unpkg.com/@rive-app/canvas@latest"></script>
+<script>
+  const canvas = document.getElementById("testimonialCanvas");
+
+  const riveInstance = new rive.Rive({
+    src: "22208-41609-marvelanddc-cards.riv", // ton fichier Rive exporté
+    canvas,
+    stateMachines: ["State Machine 1"], // nom exact de ta State Machine
+    autoplay: true,
+    onLoad: () => {
+      const inputs = riveInstance.stateMachineInputs("State Machine 1");
+      const hoverInput = inputs.find(i => i.name === "hover");
+
+      if (!hoverInput) return;
+
+      // 🖱️ Listeners Hover
+      canvas.addEventListener("mouseenter", () => {
+        hoverInput.value = true;
+      });
+
+      canvas.addEventListener("mouseleave", () => {
+        hoverInput.value = false;
+      });
+
+      // 📱 Bonus mobile
+      canvas.addEventListener("touchstart", () => {
+        hoverInput.value = true;
+      });
+      canvas.addEventListener("touchend", () => {
+        hoverInput.value = false;
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

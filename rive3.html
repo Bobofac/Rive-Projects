@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rive</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #02030a 0%, #121111 100%);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="riveCanvas" width="800" height="600"></canvas>
+
+    <script src="https://unpkg.com/@rive-app/canvas@latest"></script>
+    <script>
+        const canvas = document.getElementById("riveCanvas");
+
+        const riveInstance = new rive.Rive({
+            src: "6861-13190-card-with-glow.riv",
+            canvas,
+            stateMachines: ["State Machine 1"],
+            autoplay: true,
+            onLoad: () => {
+                const inputs = riveInstance.stateMachineInputs("State Machine 1");
+                const hoverInput = inputs.find(i => i.name === "hover");
+
+                if (!hoverInput) return;
+
+                // Hover Listeners
+                canvas.addEventListener("mouseenter", () => {
+                    hoverInput.value = true;
+                });
+
+                canvas.addEventListener("mouseleave", () => {
+                    hoverInput.value = false;
+                });
+
+                // Mobile support
+                canvas.addEventListener("touchstart", () => {
+                    hoverInput.value = true;
+                });
+                canvas.addEventListener("touchend", () => {
+                    hoverInput.value = false;
+                });
+            }
+        });
+    </script>
+    
+</body>
+</html>
